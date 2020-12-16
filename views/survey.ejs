@@ -1,0 +1,40 @@
+<%- include('./partials/header') %>
+  <h1>Survey</h1>
+  <form>
+    <div>
+      <label for='name'>What is your name</label>
+      <input type='text' id='name' name='name' />
+    </div>
+    <div>
+      <label for='colour'>What is your favourite colour?</label>
+      <input type='text' id='colour' name='colour' />
+    </div>
+    <div>
+      <label for='day'>What is your favourite day of the week?</label>
+      <%
+        const days = [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thrusday',
+          'Friday',
+          'Saturday',
+          'Sunday'
+        ];
+      %>
+      <% for (let day of days) { %>
+        <input type='radio' id='day' name='day' value='<%= day %>'>
+        <label for='day'><%= day %></label>
+      <% } %>
+      <input type='submit' value='submit'>
+    </div>
+  </form>
+
+  <div>
+    <%= username %>
+    <br>
+    <%= a %>
+    <br>
+    <%= b %>
+  </div>
+<%- include('./partials/footer') %>

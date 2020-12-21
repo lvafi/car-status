@@ -1,11 +1,9 @@
 // the only thing we need to do to get express up and running is to import it using requiew  
 const express = require('express');
+const { response } = require('express');
 const app = express();
 // app is an object that has methods you use to build a web server
 const path = require('path');   //this module helps us to draw path
-
-const logger = require('morgan');
-const { response } = require('express');
 const cookieParser = require('cookie-parser');
 
 // STATIC ASSETS
@@ -17,10 +15,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // static asset middleware will take all the files and directories within /public
 // and serve them publically with their own url
 
+const logger = require('morgan');
+
 // app is an object that has methods you use to build a web server
 app.set('view engine', 'ejs'); // setting configuration for express letting it know to use EJS as our templating engine
 
-app.use(cookieParser()); // will parse cookies and put them on request.cookies
+app.use(cookieParser()); // will parse cookies and put them on request.cookies 
+//invoking the function that imported & now the middleware is mounted
+
 
 // app.use is a method used to mount middleware
 app.use(logger('dev')); //add logging middleware
@@ -50,9 +52,14 @@ app.get('/hello_world', (request, response) => {
 app.get('/welcome', (request, response) => {
   // response.send('Hello');
   // .render() use to render out a template a template at "/views/<template_name>"
-  const ONE_DAY = 1000 * 60 * 60 * 24;
+  const ONE_DAY = 1000 * 60 * 60 * 24;  //1000milliseconds * 60seconds * 60min *24 to turn millisecond to one day
   response.cookie('hello', 'world', { maxAge: ONE_DAY })
+  // key -> hello  and  value -> world
+  // now if we navigate to localhost:3000/welcome -> inspect -> Network tab -> welcome ->scroll down to Request Headers -> you can see cookie: hello=world -> this cookie created by express server and tells the browser to create a cookie with these values
+  // if head over Application tab cookies show the current url you are on and shows all the stored cookies
+  // every single time that localhost:300/welcome makes request the broswser will automatically grab all the cookies that related to url and send along with request
   response.render('welcome'); // express will look for a view/template at /views/welcome
+ 
 })
 
 // GET /contact_us
@@ -90,6 +97,8 @@ app.get('/survey', (req, res) => {
       b: day
     });
 });
+// refresh http://localhost:3000/survey  & then check terminal
+// terminal shows:    🍪 Cookies: { hello: 'world', Hello: 'World' }
 app.post('/sign_in', (req, res) => {
     // req.body holds all the info from the post request
     const COOKIE_EXPIRE = 1000 * 60 * 60 * 24 * 7;

@@ -1,6 +1,9 @@
 // the only thing we need to do to get express up and running is to import it using requiew  
 const express = require('express');
 const app = express();
+// app is an object that has methods you use to build a web server
+const path = require('path');   //this module helps us to draw path
+
 const logger = require('morgan');
 const { response } = require('express');
 const cookieParser = require('cookie-parser');
@@ -10,8 +13,7 @@ const cookieParser = require('cookie-parser');
 // path.join('/', 'users', 'bob'); // "/users/bob"
 
 // __dirname is a global variable provided by node that has the value of the path to your root directory
-
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 // static asset middleware will take all the files and directories within /public
 // and serve them publically with their own url
 
@@ -59,22 +61,22 @@ app.get('/contact_us', (request, response) => {
 })
 
 app.get('/thank_you', (request, response) => {
-// request.query contains info from query params from the url
-// {
-//   fullname: 'brandon',
-//   email: 'codecore@gmail.com',
-//   message: 'hello world'
-// }
-const fullname = request.query.fullname;
-const email = request.query.email;
-const message = request.query.message;
-// passing a second object as an argument to render allows you to use variables within the template
-// every key will become a variable that can be used
-response.render('thank_you', {
-fullname: fullname,
-email: email,
-message: message
-})
+  // request.query contains info from query params from the url
+  // {
+  //   fullname: 'brandon',
+  //   email: 'codecore@gmail.com',
+  //   message: 'hello world'
+  // }
+  const fullname = request.query.fullname;
+  const email = request.query.email;
+  const message = request.query.message;
+  // passing a second object as an argument to render allows you to use variables within the template
+  // every key will become a variable that can be used
+  response.render('thank_you', {
+  fullname: fullname,
+  email: email,
+  message: message
+  })
 })
 
 app.get('/survey', (req, res) => {

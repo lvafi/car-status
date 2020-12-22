@@ -47,6 +47,27 @@ app.use((req, res, next) => {
   next();
 })
 
+app.use(noMonkey);
+
+function noMonkey(req, res, next) {
+  // req.body can look something like:
+  // { username: 'monkey', a: 'apples', b: 'bananas' }
+  const body = req.body;
+  //console.log(body);
+
+  let monkeyFound = false;
+  for (let key in body) {
+    if(`${body[key]}`.toLowerCase() === 'monkey') {
+      monkeyFound = true;
+    }
+  }
+  if (monkeyFound) {
+    res.send('No monkeys allowed');
+  } else {
+    next();
+  }
+}
+
 // app.get arguments:
 // 1) path
 // 2) callback with the arguments: 1) request 2) response

@@ -32,6 +32,21 @@ app.use(cookieParser()); // will parse cookies and put them on request.cookies
 // app.use is a method used to mount middleware
 app.use(logger('dev')); //add logging middleware
 
+// CUSTOM MIDDLEWARE
+app.use((req, res, next) => {
+  console.log('🍪:', req.cookies);
+  const username = req.cookies.username;
+
+  res.locals.username = "";
+  // properties set on res.locals become accessible in any view
+  if (username) {
+    res.locals.username = username
+    console.log(`Signed in as ${username}`);
+  }
+  // next is a function, when invoked it will tell express to move on to the next middleware
+  next();
+})
+
 // app.get arguments:
 // 1) path
 // 2) callback with the arguments: 1) request 2) response
@@ -97,7 +112,7 @@ app.get('/survey', (req, res) => {
     const { name, colour, day } = req.query
     // const name = req.query.name;
     res.render('survey', {
-      username: name,
+      u: name,
       a: colour,
       b: day
     });

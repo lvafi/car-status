@@ -4,14 +4,20 @@
     <a href="/contact_us">Contact Us</a>
     |
     <a href="#"><% 5 + 5 %></a>
-    <form action='/sign_in' method="POST" class="form-inline">
-        <div>
-            <label for="username">Username</label>
-            <input class="form-control mr-2" name='username' placeholder="Username" />
-        </div>
-        <button type='submit' class='btn btn-outline-dark'>Sign In</button>
-    </form>
-    
+
+    <% if (username) { %>
+        <span>
+            <%= username %>
+        </span>
+    <% } else { %>
+        <form action='/sign_in' method="POST" class="form-inline">
+            <div>
+                <label for="username">Username</label>
+                <input class="form-control mr-2" name='username' placeholder="Username" />
+            </div>
+            <button type='submit' class='btn btn-outline-dark'>Sign In</button>
+        </form>
+    <% } %>        
 </div>
 
 

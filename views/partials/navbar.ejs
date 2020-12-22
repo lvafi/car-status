@@ -9,6 +9,9 @@
         <span>
             <%= username %>
         </span>
+        <form action='/sign_out' method="POST">
+            <input class='form-control mr-2' type="submit">
+          </form>
     <% } else { %>
         <form action='/sign_in' method="POST" class="form-inline">
             <div>

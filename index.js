@@ -129,6 +129,11 @@ app.post('/sign_in', (req, res) => {
   // to test inspect and go to Application to see the cookie 
 })
 
+app.post('/sign_out', (req, res) => {
+  res.clearCookie('username');
+  res.redirect('/welcome');
+});
+
 const ADDRESS = 'localhost'; // the loopback address this is your home for your machine. The IP is 127.0.0.1
 const PORT = 3000;
 app.listen(PORT, ADDRESS, () => {
